@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class WeatherData(APIView):
-    def get(self, request,*args, **kwargs):
+    def get(self, request):
         city = request.query_params.get('city', None)
         try:
             url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'

@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-#from django.urls import path
 from weather import apiviews
 
 urlpatterns = [
     url(r"^weather/", apiviews.WeatherData.as_view(), name="weather"),
     url(r'^admin/', admin.site.urls),
-    #re_path(r'^', include('weather.urls')),
 ]
