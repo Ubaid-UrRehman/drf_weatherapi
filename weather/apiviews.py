@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class WeatherData(APIView):
-    def get(self, request):
-        city = request.query_params.get('city', None)
+    def get_weather_data(self, city):
         try:
             url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
             weather_data = requests.get(url.format(city)).json()
@@ -13,12 +12,10 @@ class WeatherData(APIView):
         except:
             return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
+    def get(self, request):
+        city = request.query_params.get('city', None)
+        return self.get_weather_data(city)
 
     def post(self, request):
         city = request.data.get('city', None)
-        try:
-            url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
-            weather_data = requests.get(url.format(city)).json()
-            return Response(weather_data)
-        except:
-            return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
+        return self.get_weather_data(city)
